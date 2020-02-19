@@ -27,8 +27,10 @@ func OpenDB() (err error) {
 
 func (v *Vortrag) Put() (err error) {
 	log.Println("Put", v)
-	tx, _ := db.Begin()
-
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
 	defer tx.Rollback()
 
 	var stmt *sql.Stmt
